@@ -20,5 +20,6 @@ class Closet(models.Model):
     clothes = models.ForeignKey(
         ClothingItem,
         on_delete=models.CASCADE,
+        relatable
     )
     count = models.IntegerField()
