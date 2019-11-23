@@ -10,8 +10,15 @@ Hack Western 2019
 
 `./cloud_sql_proxy -instances="lunar-descent-259920:us-central1:closet"=tcp:3306`
 
-3. cd into the `outfitpicker` directory that has `manage.py`
+3. make sure you're running a virtual env for python
 
-4. run `python manage.py runserver`
+```
+virtualenv .venv
+source .venv/bin/activate
+```
 
-5. go to `http://127.0.0.1:8000/` in the browser to see your django app!!!!
+4. cd into the `outfitpicker` directory that has `manage.py`
+
+5. run `python manage.py runserver`
+
+6. go to `http://127.0.0.1:8000/` in the browser to see your django app!!!!
