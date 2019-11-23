@@ -1,6 +1,6 @@
 from django.db import models
 
-class ClothingItem(models.model):
+class ClothingItem(models.Model):
     clothing_type_choices = (
         ('top', 'Top'),
         ('bottom', 'Bottom'),
@@ -9,12 +9,13 @@ class ClothingItem(models.model):
         ('outerwear', 'Outerwear'),
     )
     name = models.CharField(max_length=100)
-    colour = models.CharField()
-    material = models.CharField()
+    colour = models.CharField(max_length=100)
+    material = models.CharField(max_length=100)
     clothing_type = models.CharField(
         choices=clothing_type_choices,
+        max_length=100,
     )
 
-class Closet(models.model):
+class Closet(models.Model):
     clothes = ClothingItem()
     count = models.IntegerField()
