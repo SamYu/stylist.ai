@@ -17,5 +17,8 @@ class ClothingItem(models.Model):
     )
 
 class Closet(models.Model):
-    clothes = ClothingItem()
+    clothes = models.ForeignKey(
+        ClothingItem,
+        on_delete=models.CASCADE,
+    )
     count = models.IntegerField()
