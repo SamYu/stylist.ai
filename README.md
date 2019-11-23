@@ -14,7 +14,6 @@ Hack Western 2019
 3. make sure you're running a virtual env for python
 
 ```
-virtualenv .venv
 source .venv/bin/activate
 ```
 
