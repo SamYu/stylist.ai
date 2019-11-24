@@ -40,7 +40,8 @@ def remove_clothing_item(request):
     closet = user.closet
     clothing_item = closet.clothes.all().get(id=id)
     clothing_item.delete()
-    rresponse.status_code = 200
+    response = HttpResponse()
+    response.status_code = 200
     return response
 
 @csrf_exempt
@@ -61,6 +62,26 @@ def view_clothes(request):
     return HttpResponse(json.dumps(clothesDict), content_type="application/json")
 
 @csrf_exempt
+def view_clothing_item(request):
+    user = request.user
+    closet = user.closet
+    json_data = json.loads(request.body)
+    id = json_data.id
+    clothing_item = closet.clothes.get(id=id)
+    serialized_obj = serializers.serialize('json', [clothing_item])
+    return HttpResponse(serialized_obj, content_type="application/json")
+
+@csrf_exempt
+def view_outfit(request):
+    user = request.user
+    closet = user.closet
+    json_data = json.loads(request.body)
+    id = json_data.id
+    outfit_item = closet.outfits.get(id=id)
+    serialized_obj = serializers.serialize('json', [outfit_item])
+    return HttpResponse(serialized_obj, content_type="application/json")
+
+@csrf_exempt
 def suggested_outfit(request):
     user = request.user
     closet = user.closet
@@ -70,9 +91,36 @@ def suggested_outfit(request):
     serialized_obj = serializers.serialize('json', [randomOutfit])
     return HttpResponse(serialized_obj, content_type="application/json")
 
-# @csrf_exempt
-# def add_outfit(request):
-#     user = request.user
-#     closet = user.closet 
-#     new_outfit = Outfit{
-#     }
+@csrf_exempt
+def add_outfit(request):
+    user = request.user
+    clothArray = []
+    closet = user.closet 
+    json_data = json.loads(request.body)
+    for item in range(len(json_data.clothItem)):
+        id = item.id
+        clothingItem = closet.clothes.get(id=id)
+        clothArray.append(clothingItem)
+    new_outfit = Outfit(
+        name=json_data.name,
+        rating=json_data.rating,
+    )
+    new_outfit.save()
+    new_outfit.clothes.add(*clothArray)
+    new_outfit.save()
+    response = HttpResponse()
+    response.status_code = 200
+    return response
+
+
+@csrf_exempt
+def remove_outfit(request):
+    user = request.user
+    closet = user.closet
+    json_data = json.loads(request.body)
+    id = json_data['id']
+    removed_outfit = closet.outfits.all().get(id=id)
+    removed_outfit.delete()
+    response = HttpResponse()
+    response.status_code = 200
+    return response
