@@ -13,6 +13,11 @@ class Closet(models.Model):
     def __str__(self):
        return self.user.email + '\'s closet'
 
+class ClothingMaterial(models.Model):
+    name = models.CharField(max_length=100)
+    def __str__(self):
+       return self.name
+
 class ClothingItem(models.Model):
     clothing_type_choices = (
         ('top', 'Top'),
@@ -35,6 +40,13 @@ class ClothingItem(models.Model):
         null=True,
         blank=True,
     )
+    material = models.ForeignKey(
+        ClothingMaterial,
+        on_delete=models.CASCADE,
+        related_name="clothes",
+        null=True,
+        blank=True,
+    )
 
     def __str__(self):
        return self.name
@@ -52,8 +64,10 @@ class Outfit(models.Model):
         null=True,
         blank=True,
     )
-    rating = models.IntegerField()
+    rating = models.IntegerField(
+        null=True,
+        blank=True,
+    )
 
     def __str__(self):
        return self.name
-
