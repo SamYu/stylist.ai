@@ -22,7 +22,9 @@ def register(request):
 
     new_closet = Closet(user=new_user, count=0)
     new_closet.save()
-    return HttpResponse("hack western baby")
+    response = HttpResponse()
+    response.status_code = 200
+    return response
 
 
 @csrf_exempt
