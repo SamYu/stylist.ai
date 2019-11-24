@@ -2,6 +2,7 @@ from django.db import models
 from django.contrib.auth import get_user_model
 from django.conf import settings
 
+
 class Closet(models.Model):
     user = models.OneToOneField(
         settings.AUTH_USER_MODEL,
@@ -11,7 +12,8 @@ class Closet(models.Model):
     count = models.IntegerField()
 
     def __str__(self):
-       return self.user.email + '\'s closet'
+        return self.user.email + '\'s closet'
+
 
 class ClothingMaterial(models.Model):
     name = models.CharField(max_length=100)
@@ -49,7 +51,8 @@ class ClothingItem(models.Model):
     )
 
     def __str__(self):
-       return self.name
+        return self.name
+
 
 class Outfit(models.Model):
     name = models.CharField(max_length=100)
