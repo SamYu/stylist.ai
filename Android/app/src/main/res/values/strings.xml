@@ -12,4 +12,18 @@
     <string name="already_registered">Already Registered?</string>
     <string name="login">Login</string>
     <string name="email">Email</string>
+    <string name="title_activity_main">MainActivity</string>
+    <string name="submit">Submit</string>
+    <string name="add_clothing">Add Clothing</string>
+    <string name="name">Name:</string>
+
+    <string-array name="typesArray">
+        <item>T-Shirts</item>
+        <item>Sweater</item>
+        <item>Outerwear</item>
+        <item>Pants</item>
+        <item>Shoes</item>
+        <item>Accessories</item>
+    </string-array>
+    <string name="title_activity_home">Home</string>
 </resources>

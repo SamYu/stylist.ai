@@ -66,3 +66,4 @@ def view_clothes(request):
     # import ipdb; ipdb.set_trace()
     return HttpResponse(json.dumps(clothesDict), content_type="application/json")
 
+
