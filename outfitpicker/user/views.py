@@ -3,9 +3,11 @@ from django.contrib.auth.models import User
 from django.contrib.auth import authenticate
 from django.http import HttpResponse
 from closet.models import Closet
+from django.views.decorators.csrf import csrf_exempt
 import json
 
 
+@csrf_exempt
 def register(request):
     # username
     # email
@@ -23,6 +25,7 @@ def register(request):
     return HttpResponse("hack western baby")
 
 
+@csrf_exempt
 def login(request):
     # username
     # password
@@ -31,6 +34,7 @@ def login(request):
     password = json_data["password"]
 
     user = authenticate(username=username, password=password)
+
     response = HttpResponse()
     if user is not None:
         response.status_code = 200
