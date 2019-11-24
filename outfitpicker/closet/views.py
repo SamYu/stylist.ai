@@ -1,57 +1,69 @@
+import json
 from django.shortcuts import render
-
+from django.db import models
+from django.contrib.auth.models import User
 from django.http import HttpResponse
-
+from rest_framework.views import APIView
 from closet.models import (
-    Outfit,
     ClothingItem,
-    Closet
+    Closet,
+    ClothingMaterial,
 )
-
-import webcolors
-import random
+from django.views.decorators.csrf import csrf_exempt
 
 
-def index(request):
-    return HttpResponse("hack western baby")
-
-def closest_colour(rgbColor):
-    min_colours = {}
-    for key, name in webcolors.css3_hex_to_names.items():
-        r_c, g_c, b_c = webcolors.hex_to_rgb(key)
-        rd = (r_c - rgbColor[0]) ** 2
-        gd = (g_c - rgbColor[1]) ** 2
-        bd = (b_c - rgbColor[2]) ** 2
-        min_colours[(rd + gd + bd)] = name
-    return min_colours[min(min_colours.keys())]
-
-def get_colour_name(rgbColor):
+@csrf_exempt
+def add_clothing_item(request):
+    user = request.user
+    closet = user.closet
+    json_data = json.loads(request.body)
+    #import ipdb; ipdb.set_trace()
+    material = json_data['material']
     try:
-        colorName = webcolors.rgb_to_name(rgbColor)
-    except ValueError:
-        colorName = closest_colour(rgbColor)
-    return colorName
+        clothing_material = ClothingMaterial.get(name=material)
+    except:
+        clothing_material = ClothingMaterial(name=material)
+        clothing_material.save()
 
-def generate_n_clothes(seed, n):
-    for i in range(n):
-        random.seed(seed)
-        clothing_type_choice = (
-            ('top', 'Top'),
-            ('bottom', 'Bottom'),
-            ('shoe', 'Shoe'),
-            ('accessory', 'Accessory'),
-            ('outerwear', 'Outerwear'),
-        )
-        random_rgb = (
-            random.randInt(0, 255),
-            random.randInt(0, 255),
-            random.randint(0, 255)
-        )
-        new_color = get_colour_name(random_rgb)
-        #new_material = 
-        new_type = clothing_type_choice[random.randInt(0, 4)][0]
-        new_name = new_color + " " + new_type + " " + i
+    new_clothing = ClothingItem(
+        name=json_data['name'],
+        clothing_type=json_data['clothing_type'],
+        material=clothing_material,
+        colour=json_data['colour'],
+        closet=closet
+    )
+    new_clothing.save()
+    response = HttpResponse()
+    response.status_code = 200
+    return response
 
+@csrf_exempt
+def remove_clothing_item(request):
+    json_data = json.loads(request.body)
+    id = json_data['id']
+    user = request.user
+    closet = user.closet
+    clothing_item = closet.clothes.all().get(id=id)
+    clothing_item.delete()
+    rresponse.status_code = 200
+    return response
 
+@csrf_exempt
+def view_clothes(request):
+    clothesDict = {}
+    user = request.user
+    closet = user.closet 
+    clothes_set = closet.clothes.all()
+    for index, item in enumerate(clothes_set):
+        itemInfo = {
+            "id": item.id,
+            "name": item.name, 
+            "clothing_type": item.clothing_type,
+            "colour": item.colour,
+            "material": item.material.name,
+            }
+        clothesDict[str(index)] = itemInfo
+    # import ipdb; ipdb.set_trace()
+    return HttpResponse(json.dumps(clothesDict), content_type="application/json")
 
 

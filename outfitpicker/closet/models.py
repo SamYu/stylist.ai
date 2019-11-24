@@ -30,7 +30,6 @@ class ClothingItem(models.Model):
     )
     name = models.CharField(max_length=100)
     colour = models.CharField(max_length=100)
-    material = models.CharField(max_length=100)
     clothing_type = models.CharField(
         choices=clothing_type_choices,
         max_length=100,
