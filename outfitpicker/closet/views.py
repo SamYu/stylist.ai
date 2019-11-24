@@ -4,10 +4,13 @@ from django.db import models
 from django.contrib.auth.models import User
 from django.http import HttpResponse
 from rest_framework.views import APIView
+from random import randint
+from django.core import serializers
 from closet.models import (
     ClothingItem,
     Closet,
     ClothingMaterial,
+    Outfit, 
 )
 from django.views.decorators.csrf import csrf_exempt
 
@@ -17,22 +20,14 @@ def add_clothing_item(request):
     user = request.user
     closet = user.closet
     json_data = json.loads(request.body)
-    #import ipdb; ipdb.set_trace()
-    material = json_data['material']
-    try:
-        clothing_material = ClothingMaterial.get(name=material)
-    except:
-        clothing_material = ClothingMaterial(name=material)
-        clothing_material.save()
-
     new_clothing = ClothingItem(
         name=json_data['name'],
         clothing_type=json_data['clothing_type'],
-        material=clothing_material,
         colour=json_data['colour'],
         closet=closet
     )
     new_clothing.save()
+    user.closet.count += 1 
     response = HttpResponse()
     response.status_code = 200
     return response
@@ -60,9 +55,24 @@ def view_clothes(request):
             "name": item.name, 
             "clothing_type": item.clothing_type,
             "colour": item.colour,
-            "material": item.material.name,
             }
         clothesDict[str(index)] = itemInfo
     # import ipdb; ipdb.set_trace()
     return HttpResponse(json.dumps(clothesDict), content_type="application/json")
 
+@csrf_exempt
+def suggested_outfit(request):
+    user = request.user
+    closet = user.closet
+    outfit_set = closet.outfits.all()
+    outfit_count = outfit_set.count()
+    randomOutfit = outfit_set[randint(0, outfit_count - 1)]
+    serialized_obj = serializers.serialize('json', [randomOutfit])
+    return HttpResponse(serialized_obj, content_type="application/json")
+
+# @csrf_exempt
+# def add_outfit(request):
+#     user = request.user
+#     closet = user.closet 
+#     new_outfit = Outfit{
+#     }
