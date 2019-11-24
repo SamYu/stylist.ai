@@ -28,7 +28,8 @@ DEBUG = True
 ALLOWED_HOSTS = [
     'lunar-descent-259920.appspot.com',
     '127.0.0.1',
-    'localhost'
+    'localhost',
+    '10.0.2.2'
 ]
 
 

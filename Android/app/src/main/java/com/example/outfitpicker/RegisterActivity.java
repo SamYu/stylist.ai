@@ -20,6 +20,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
+import com.android.volley.toolbox.StringRequest;
 import com.android.volley.RequestQueue;
 import com.android.volley.toolbox.Volley;
 
@@ -83,8 +84,10 @@ public class RegisterActivity extends AppCompatActivity {
                     e.printStackTrace();
                 }
 
-                String url = "http://localhost:8000/user/register";
-                JsonObjectRequest objectRequest = new JsonObjectRequest(
+
+                //String jsonString = registerInfo.toString();
+                String url = "http://10.0.2.2:8000/user/register";
+                JsonObjectRequest stringRequest = new JsonObjectRequest(
                         Request.Method.POST,
                         url,
                         registerInfo,
@@ -102,7 +105,8 @@ public class RegisterActivity extends AppCompatActivity {
                             }
                         }
                 );
-                requestQueue.add(objectRequest);
+
+                requestQueue.add(stringRequest);
 
             }
         });
