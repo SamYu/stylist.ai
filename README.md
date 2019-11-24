@@ -1,4 +1,4 @@
-# Outfit-Picker
+# stylist.ai
 
 Hack Western 2019
 
