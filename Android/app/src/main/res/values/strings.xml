@@ -1,4 +1,14 @@
 <resources>
     <string name="app_name">OutfitPicker</string>
     <string name="action_settings">Settings</string>
+    <string name="username">Username</string>
+    <string name="password">Password</string>
+    <string name="login_button">Login</string>
+    <string name="not_registered">Not Registered</string>
+    <string name="register">Register</string>
+    <string name="title_activity_register">RegisterActivity</string>
+    <string name="confirm_password">Confirm Password</string>
+    <string name="complete_registration">Complete Registration</string>
+    <string name="already_registered">Already Registered?</string>
+    <string name="login">Login</string>
 </resources>

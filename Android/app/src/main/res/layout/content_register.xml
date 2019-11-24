@@ -5,8 +5,8 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
-    tools:context=".LoginActivity"
-    tools:showIn="@layout/activity_main"
+    tools:context=".RegisterActivity"
+    tools:showIn="@layout/activity_register"
     android:orientation="vertical"
     android:gravity="center_horizontal">
 
@@ -25,13 +25,20 @@
         android:layout_marginTop="20dp"
         android:hint="@string/password"
         android:background="#ffffff"/>
+    <EditText
+        android:id="@+id/confirmPassword"
+        android:layout_width="190dp"
+        android:layout_height="40dp"
+        android:layout_marginTop="20dp"
+        android:hint="@string/confirm_password"
+        android:background="#ffffff"/>
     <Button
-        android:id="@+id/login_button"
+        android:id="@+id/register_button"
         android:layout_width="190dp"
         android:layout_height="40dp"
         android:layout_marginTop="20dp"
         android:background="#04ea00"
-        android:text="@string/login_button"/>
+        android:text="@string/complete_registration"/>
 
     <LinearLayout
         android:layout_width="wrap_content"
@@ -42,17 +49,16 @@
             android:layout_width="wrap_content"
             android:layout_height="35dp"
             android:textColor="#0f3a00"
-            android:text="@string/not_registered"/>
+            android:text="@string/already_registered"/>
         <TextView
-            android:id="@+id/register"
+            android:id="@+id/login"
             android:layout_width="wrap_content"
             android:layout_height="35dp"
             android:paddingLeft="10dp"
             android:textStyle="bold"
             android:textColor="#04ea00 "
-            android:text="@string/register"/>
+            android:text="@string/login"/>
 
     </LinearLayout>
-
 
 </LinearLayout>
