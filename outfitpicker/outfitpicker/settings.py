@@ -27,7 +27,8 @@ DEBUG = True
 
 ALLOWED_HOSTS = [
     'lunar-descent-259920.appspot.com',
-    '127.0.0.1'
+    '127.0.0.1',
+    'localhost'
 ]
 
 
@@ -42,6 +43,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'rest_framework',
     'closet',
+    'user'
 ]
 
 MIDDLEWARE = [
@@ -84,12 +86,12 @@ if os.getenv('GAE_APPLICATION', None):
     # the unix socket at /cloudsql/<your-cloudsql-connection string>
     DATABASES = {
         'default': {
-        'ENGINE': 'django.db.backends.mysql',
-        'HOST': '/cloudsql/lunar-descent-259920:us-central1:closet',
-        'USER': 'admin',
-        'PASSWORD': '',
-        'NAME': 'outfitpicker',
-    }
+            'ENGINE': 'django.db.backends.mysql',
+            'HOST': '/cloudsql/lunar-descent-259920:us-central1:closet',
+            'USER': 'admin',
+            'PASSWORD': '',
+            'NAME': 'outfitpicker',
+        }
     }
 else:
     # Running locally so connect to either a local MySQL instance or connect to
