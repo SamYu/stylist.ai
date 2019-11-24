@@ -71,6 +71,8 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'outfitpicker.wsgi.application'
 
+import pymysql  # noqa: 402
+pymysql.install_as_MySQLdb()
 
 # Database
 # https://docs.djangoproject.com/en/2.2/ref/settings/#databases
