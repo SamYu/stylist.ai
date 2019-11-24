@@ -1,27 +1,40 @@
+import json
 from django.shortcuts import render
-
+from django.contrib.auth.models import User
 from django.http import HttpResponse
+from rest_framework.views import APIView
 from closet.models import (
     ClothingItem,
     Closet,
 )
-
-def index(request):
-    return HttpResponse("hack western baby")
+from django.views.decorators.csrf import csrf_exempt
 
 
-def add_clothing_item(request):
-    user = get_auth_user()
-    closet = user.closet
-    new_clothing = ClothingItem(
-        name=request.data.get('name'),
-        type=request.data.get('type'),
-        material=request.data.get('material'),
-        colour=request.data.get('colour'),
+
+class ClothingItemView(APIView):
+
+    @csrf_exempt
+    def add_clothing_item(request):
+        user = request.user
+        closet = user.closet
+        json_data = json.loads(request.body)
+        # import ipdb; ipdb.set_trace()
+        new_clothing = ClothingItem(
+        name=json_data['name'],
+        clothing_type=json_data['clothing_type'],
+        material=json_data['material'],
+        colour=json_data['colour'],
         closet=closet
-    )
+        )
+        new_clothing.save()
+        return(new_clothing.id)
+           
+        
+     
 
-# name: 'nike shirt'
-# type: 'Top'
-# colour: 'Red'
-
+        # def remove_clothing_item(request):
+        # id = request
+        # clothing_item = ClothingItem.objects.get(
+        #     id=id,
+        # )
+        # clothing_item.delete()
