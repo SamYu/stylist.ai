@@ -4,6 +4,7 @@ from django.contrib.auth import authenticate, login, logout
 from django.http import HttpResponse
 from closet.models import Closet
 from django.views.decorators.csrf import csrf_exempt
+from django.http import JsonResponse
 import json
 
 
@@ -22,9 +23,7 @@ def register(request):
 
     new_closet = Closet(user=new_user, count=0)
     new_closet.save()
-    response = HttpResponse()
-    response.status_code = 200
-    return response
+    return JsonResponse({'status_code': 200, 'message': 'success'})
 
 
 @csrf_exempt
