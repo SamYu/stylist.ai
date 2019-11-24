@@ -1,0 +1,9 @@
+Django==2.1.14
+djangorestframework==3.10.3
+mysql-connector-python==8.0.11
+mysqlclient==1.4.6
+protobuf==3.10.0
+PyMySQL==0.9.3
+pytz==2019.3
+six==1.13.0
+sqlparse==0.3.0
