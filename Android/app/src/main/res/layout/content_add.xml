@@ -121,7 +121,9 @@
         android:layout_height="36dp"
         android:layout_marginStart="32dp"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView6" />
+        app:layout_constraintTop_toBottomOf="@+id/textView6"
+        android:entries="@array/typesArray"
+        />
 
     <Button
         android:id="@+id/imageButton"

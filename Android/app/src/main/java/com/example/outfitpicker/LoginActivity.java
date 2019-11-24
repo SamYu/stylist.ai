@@ -78,7 +78,7 @@ public class LoginActivity extends AppCompatActivity {
                     e.printStackTrace();
                 }
 
-                String url = "http://172.30.152.1:8000/api-auth/login/";
+                String url = "http://10.0.2.2:8000/user/login";
                 JsonObjectRequest objectRequest = new JsonObjectRequest(
                         Request.Method.POST,
                         url,
@@ -87,6 +87,7 @@ public class LoginActivity extends AppCompatActivity {
                             @Override
                             public void onResponse(JSONObject response) {
                                 Log.e("Rest Response", response.toString());
+                                setContentView(R.layout.activity_add);
                             }
                         },
                         new Response.ErrorListener() {
