@@ -1,4 +1,16 @@
 <resources>
     <string name="app_name">OutfitPicker</string>
     <string name="action_settings">Settings</string>
+    <string name="submit">Submit</string>
+    <string name="add_clothing">Add Clothing</string>
+    <string name="name">Name:</string>
+
+    <string-array name="typesArray">
+        <item>T-Shirts</item>
+        <item>Outerwear</item>
+        <item>Pants</item>
+        <item>Accessories</item>
+    </string-array>
+    <string name="title_activity_home">Home</string>
+
 </resources>
