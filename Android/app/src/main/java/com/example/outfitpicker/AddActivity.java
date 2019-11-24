@@ -38,7 +38,7 @@ import java.util.*;
 import java.net.*;
 import java.io.*;
 
-public class MainActivity extends AppCompatActivity {
+public class AddActivity extends AppCompatActivity {
     String name, colour, material, type;
 
     EditText nameInput;
@@ -55,7 +55,7 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.activity_add);
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
@@ -105,7 +105,7 @@ public class MainActivity extends AppCompatActivity {
     private void Submit(String data)
     {
         final String savedata= data;
-        String URL="";
+        String URL="http://10.0.2.2:8000/closet/add_clothing_item";
 
         RequestQueue requestQueue= Volley.newRequestQueue(getApplicationContext());
         StringRequest stringRequest = new StringRequest(Request.Method.POST, URL, new Response.Listener<String>() {

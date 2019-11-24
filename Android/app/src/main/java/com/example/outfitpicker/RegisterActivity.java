@@ -82,7 +82,8 @@ public class RegisterActivity extends AppCompatActivity {
                 } catch(JSONException e){
                     e.printStackTrace();
                 }
-                String url = "";
+
+                String url = "http://localhost:8000/user/register";
                 JsonObjectRequest objectRequest = new JsonObjectRequest(
                         Request.Method.POST,
                         url,
@@ -91,6 +92,7 @@ public class RegisterActivity extends AppCompatActivity {
                             @Override
                             public void onResponse(JSONObject response) {
                                 Log.e("Rest Response", response.toString());
+                                setContentView(R.layout.activity_add);
                             }
                         },
                         new Response.ErrorListener() {
