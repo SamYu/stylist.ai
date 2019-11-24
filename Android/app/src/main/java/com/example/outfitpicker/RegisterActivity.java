@@ -3,7 +3,11 @@ package com.example.outfitpicker;
 import android.content.Intent;
 import android.os.Bundle;
 
+import com.android.volley.Request;
 import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.snackbar.Snackbar;
@@ -11,6 +15,7 @@ import com.google.android.material.snackbar.Snackbar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -44,7 +49,7 @@ public class RegisterActivity extends AppCompatActivity {
                         .setAction("Action", null).show();
             }
         });
-        RequestQueue requestQueue = Volley.newRequestQueue(this);
+        final RequestQueue requestQueue = Volley.newRequestQueue(this);
 
         mTextUsername = (EditText)findViewById(R.id.username);
         mTextEmail = (EditText)findViewById(R.id.email);
@@ -57,6 +62,46 @@ public class RegisterActivity extends AppCompatActivity {
             public void onClick(View View){
                 Intent loginIntent = new Intent(RegisterActivity.this, LoginActivity.class);
                 startActivity(loginIntent);
+            }
+        });
+        mButtonRegister.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View View) {
+                String username = mTextUsername.getText().toString();
+                String email = mTextEmail.getText().toString();
+                String password = mTextPassword.getText().toString();
+                String confirmPassword = mTextConfirmPassWord.getText().toString();
+                if (password != confirmPassword) {
+                    //show message
+                }
+                JSONObject registerInfo = new JSONObject();
+                try {
+                    registerInfo.put("username", username);
+                    registerInfo.put("email", email);
+                    registerInfo.put("password", password);
+                } catch(JSONException e){
+                    e.printStackTrace();
+                }
+                String url = "";
+                JsonObjectRequest objectRequest = new JsonObjectRequest(
+                        Request.Method.POST,
+                        url,
+                        registerInfo,
+                        new Response.Listener<JSONObject>() {
+                            @Override
+                            public void onResponse(JSONObject response) {
+                                Log.e("Rest Response", response.toString());
+                            }
+                        },
+                        new Response.ErrorListener() {
+                            @Override
+                            public void onErrorResponse(VolleyError error) {
+                                Log.e("Rest Response", error.toString());
+                            }
+                        }
+                );
+                requestQueue.add(objectRequest);
+
             }
         });
 
