@@ -95,7 +95,9 @@ public class RegisterActivity extends AppCompatActivity {
                             @Override
                             public void onResponse(JSONObject response) {
                                 Log.e("Rest Response", response.toString());
-                                setContentView(R.layout.activity_add);
+
+                                Intent loginIntent = new Intent(RegisterActivity.this, AddActivity.class);
+                                startActivity(loginIntent);
                             }
                         },
                         new Response.ErrorListener() {
@@ -105,9 +107,7 @@ public class RegisterActivity extends AppCompatActivity {
                             }
                         }
                 );
-
                 requestQueue.add(stringRequest);
-
             }
         });
 

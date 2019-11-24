@@ -10,6 +10,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
 import android.provider.MediaStore;
+import android.util.Log;
 import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -34,23 +35,16 @@ import android.widget.Toast;
 import org.json.JSONObject;
 import org.json.JSONException;
 
-import java.util.*;
-import java.net.*;
-import java.io.*;
 
 public class AddActivity extends AppCompatActivity {
-    String name, colour, material, type;
-
     EditText nameInput;
     EditText colourInput;
-    EditText materialInput;
+    TextView output;
 
     Spinner typeSpinner;
 
-    Button imageButton;
     Button submitButton;
 
-    private static final int PICK_IMAGE = 100;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -59,97 +53,66 @@ public class AddActivity extends AppCompatActivity {
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        typeSpinner = (Spinner) findViewById(R.id.typeSpinner);
-        ArrayAdapter<CharSequence> myAdapter = ArrayAdapter.createFromResource(this,
-                R.array.typesArray, android.R.layout.simple_spinner_item);
-        myAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        typeSpinner.setAdapter(myAdapter);
+        typeSpinner = findViewById(R.id.typeSpinner);
 
-        nameInput = (EditText) findViewById(R.id.nameInput);
-        colourInput = (EditText) findViewById(R.id.colourInput);
-        materialInput = (EditText) findViewById(R.id.materialInput);
+        nameInput = findViewById(R.id.nameInput);
+        colourInput = findViewById(R.id.colourInput);
 
-        imageButton = (Button) findViewById(R.id.imageButton);
+        output = findViewById(R.id.message);
 
-        imageButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                openGallery();
-            }
-        });
+        final RequestQueue requestQueue = Volley.newRequestQueue(this);
 
-        submitButton = (Button) findViewById(R.id.submitButton);
+        //imageButton = findViewById(R.id.imageButton);
+
+
+        submitButton = (Button)findViewById(R.id.submit_add);
         submitButton.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View V) {
-                name = nameInput.getText().toString();
-                colour = colourInput.getText().toString();
-                material = materialInput.getText().toString();
-                type = typeSpinner.getSelectedItem().toString();
+            public void onClick(View view) {
+                Log.e("Json: ", "hello");
+                String name = nameInput.getText().toString();
+                String colour = colourInput.getText().toString();
+                String type = typeSpinner.getSelectedItem().toString();
 
-                String data = "{" + "\"name\"" + name + "\"" +
-                        "{" + "\"colour\"" + colour + "\"" +
-                        "{" + "\"material\"" + material + "\"" +
-                        "{" + "\"type\"" + type + "\"";
-                Submit(data);
+                output.setText("The " + colour + " " + name + " was added!");
+                nameInput.setText("");
+                colourInput.setText("");
+
+                JSONObject addInfo = new JSONObject();
+                try {
+                    addInfo.put("name", name);
+                    addInfo.put("colour", colour);
+                    addInfo.put("clothing_type", type);
+                } catch(JSONException e){
+                    e.printStackTrace();
+                }
+
+
+                //String jsonString = addInfo.toString();
+                String url = "http://10.0.2.2:8000/closet/add_clothing_item";
+                JsonObjectRequest stringRequest = new JsonObjectRequest(
+                        Request.Method.POST,
+                        url,
+                        addInfo,
+                        new Response.Listener<JSONObject>() {
+                            @Override
+                            public void onResponse(JSONObject response) {
+                                Log.e("Rest Response", response.toString());
+                                Intent loginIntent = new Intent(AddActivity.this, AddActivity.class);
+                                startActivity(loginIntent);
+                            }
+                        },
+                        new Response.ErrorListener() {
+                            @Override
+                            public void onErrorResponse(VolleyError error) {
+                                Log.e("Rest Response", error.toString());
+                            }
+                        }
+                );
+                requestQueue.add(stringRequest);
             }
         });
     }
-
-    private void openGallery() {
-        Intent gallery = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.INTERNAL_CONTENT_URI);
-        startActivityForResult(gallery, PICK_IMAGE);
-
-    }
-
-    private void Submit(String data)
-    {
-        final String savedata= data;
-        String URL="http://10.0.2.2:8000/closet/add_clothing_item";
-
-        RequestQueue requestQueue= Volley.newRequestQueue(getApplicationContext());
-        StringRequest stringRequest = new StringRequest(Request.Method.POST, URL, new Response.Listener<String>() {
-            @Override
-            public void onResponse(String response) {
-                try {
-                    JSONObject objres=new JSONObject(response);
-                    Toast.makeText(getApplicationContext(),objres.toString(),Toast.LENGTH_LONG).show();
-
-
-                } catch (JSONException e) {
-                    Toast.makeText(getApplicationContext(),"Server Error",Toast.LENGTH_LONG).show();
-
-                }
-                //Log.i("VOLLEY", response);
-            }
-        }, new Response.ErrorListener() {
-            @Override
-            public void onErrorResponse(VolleyError error) {
-
-                Toast.makeText(getApplicationContext(), error.getMessage(), Toast.LENGTH_SHORT).show();
-
-                //Log.v("VOLLEY", error.toString());
-            }
-        }) {
-            @Override
-            public String getBodyContentType() {
-                return "application/json; charset=utf-8";
-            }
-
-            @Override
-            public byte[] getBody() throws AuthFailureError {
-                try {
-                    return savedata == null ? null : savedata.getBytes("utf-8");
-                } catch (UnsupportedEncodingException uee) {
-                    //Log.v("Unsupported Encoding while trying to get the bytes", data);
-                    return null;
-                }
-            }
-
-        };
-        requestQueue.add(stringRequest);
-    }
-
 
 
     @Override

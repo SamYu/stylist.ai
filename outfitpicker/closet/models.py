@@ -41,13 +41,6 @@ class ClothingItem(models.Model):
         null=True,
         blank=True,
     )
-    material = models.ForeignKey(
-        ClothingMaterial,
-        on_delete=models.CASCADE,
-        related_name="clothes",
-        null=True,
-        blank=True,
-    )
 
     def __str__(self):
         return self.name

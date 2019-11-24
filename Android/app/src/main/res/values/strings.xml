@@ -18,12 +18,12 @@
     <string name="name">Name:</string>
 
     <string-array name="typesArray">
-        <item>T-Shirts</item>
-        <item>Sweater</item>
+        <item>Top</item>
+        <item>Bottom</item>
         <item>Outerwear</item>
-        <item>Pants</item>
-        <item>Shoes</item>
-        <item>Accessories</item>
+        <item>Shoe</item>
+        <item>Accessory</item>
     </string-array>
     <string name="title_activity_home">Home</string>
+    <string name="submit_add">Submit Addition</string>
 </resources>

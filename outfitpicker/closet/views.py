@@ -12,6 +12,7 @@ from closet.models import (
     Outfit,
 )
 from django.views.decorators.csrf import csrf_exempt
+from django.http import JsonResponse
 
 
 @csrf_exempt
@@ -20,24 +21,15 @@ def add_clothing_item(request):
     closet = user.closet
     json_data = json.loads(request.body)
     #import ipdb; ipdb.set_trace()
-    material = json_data['material']
-    try:
-        clothing_material = ClothingMaterial.get(name=material)
-    except:
-        clothing_material = ClothingMaterial(name=material)
-        clothing_material.save()
 
     new_clothing = ClothingItem(
         name=json_data['name'],
         clothing_type=json_data['clothing_type'],
-        material=clothing_material,
         colour=json_data['colour'],
         closet=closet
     )
     new_clothing.save()
-    response = HttpResponse()
-    response.status_code = 200
-    return response
+    return JsonResponse({'status_code': 200})
 
 @csrf_exempt
 def remove_clothing_item(request):
@@ -54,12 +46,12 @@ def remove_clothing_item(request):
 def view_clothes(request):
     clothesDict = []
     user = request.user
-    closet = user.closet 
+    closet = user.closet
     clothes_set = closet.clothes.all()
     for index, item in enumerate(clothes_set):
         itemInfo = {
             "id": item.id,
-            "name": item.name, 
+            "name": item.name,
             "clothing_type": item.clothing_type,
             "colour": item.colour,
             "material": item.material.name,
@@ -103,7 +95,7 @@ def suggested_outfit(request):
 def add_outfit(request):
     user = request.user
     clothArray = []
-    closet = user.closet 
+    closet = user.closet
     json_data = json.loads(request.body)
     for item in range(len(json_data.clothItem)):
         id = item.id
@@ -132,4 +124,3 @@ def remove_outfit(request):
     response = HttpResponse()
     response.status_code = 200
     return response
-
