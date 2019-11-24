@@ -1,5 +1,6 @@
 package com.example.outfitpicker;
 
+import android.content.Intent;
 import android.os.Bundle;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
@@ -8,6 +9,7 @@ import com.google.android.material.snackbar.Snackbar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
+import android.provider.MediaStore;
 import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -45,7 +47,10 @@ public class MainActivity extends AppCompatActivity {
 
     Spinner typeSpinner;
 
+    Button imageButton;
     Button submitButton;
+
+    private static final int PICK_IMAGE = 100;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -64,6 +69,15 @@ public class MainActivity extends AppCompatActivity {
         colourInput = (EditText) findViewById(R.id.colourInput);
         materialInput = (EditText) findViewById(R.id.materialInput);
 
+        imageButton = (Button) findViewById(R.id.imageButton);
+
+        imageButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                openGallery();
+            }
+        });
+
         submitButton = (Button) findViewById(R.id.submitButton);
         submitButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -73,9 +87,6 @@ public class MainActivity extends AppCompatActivity {
                 material = materialInput.getText().toString();
                 type = typeSpinner.getSelectedItem().toString();
 
-                TextView output = (TextView) findViewById(R.id.outputText);
-                output.setText(name + " " + colour + " " + material + " " + type + " ");
-
                 String data = "{" + "\"name\"" + name + "\"" +
                         "{" + "\"colour\"" + colour + "\"" +
                         "{" + "\"material\"" + material + "\"" +
@@ -83,6 +94,12 @@ public class MainActivity extends AppCompatActivity {
                 Submit(data);
             }
         });
+    }
+
+    private void openGallery() {
+        Intent gallery = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.INTERNAL_CONTENT_URI);
+        startActivityForResult(gallery, PICK_IMAGE);
+
     }
 
     private void Submit(String data)
