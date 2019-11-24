@@ -25,7 +25,9 @@ SECRET_KEY = 'g0kim%82!z@p%j-p2#ppk#9p^&z$ysr)on9&mo*=s51yiao#eo'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = [
+    'lunar-descent-259920.appspot.com',
+]
 
 
 # Application definition
@@ -143,5 +145,7 @@ USE_TZ = True
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/2.2/howto/static-files/
+
+STATIC_ROOT = 'static'
 
 STATIC_URL = '/static/'
