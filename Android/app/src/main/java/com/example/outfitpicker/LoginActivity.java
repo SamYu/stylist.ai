@@ -79,7 +79,7 @@ public class LoginActivity extends AppCompatActivity {
                     e.printStackTrace();
                 }
 
-                String url = "http://127.0.0.1:8000/api-auth/login/";
+                String url = "http://172.30.152.1:8000/api-auth/login/";
                 JsonObjectRequest objectRequest = new JsonObjectRequest(
                         Request.Method.POST,
                         url,
@@ -98,6 +98,8 @@ public class LoginActivity extends AppCompatActivity {
                         }
                 );
                 requestQueue.add(objectRequest);
+                String h = "HEY";
+                Log.d(h,"Hello");
             }
 
         });
