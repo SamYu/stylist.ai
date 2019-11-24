@@ -3,7 +3,6 @@ from closet.models import (
     Closet,
     ClothingItem,
 )
-
 # Register your models here.
 
 
