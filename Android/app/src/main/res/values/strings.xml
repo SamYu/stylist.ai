@@ -11,4 +11,5 @@
     <string name="complete_registration">Complete Registration</string>
     <string name="already_registered">Already Registered?</string>
     <string name="login">Login</string>
+    <string name="email">Email</string>
 </resources>

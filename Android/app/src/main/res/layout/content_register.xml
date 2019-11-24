@@ -19,6 +19,14 @@
         android:paddingLeft="2dp"
         android:background="#ffffff"/>
     <EditText
+        android:id="@+id/email"
+        android:layout_width="190dp"
+        android:layout_height="35dp"
+        android:layout_marginTop="160dp"
+        android:hint="@string/email"
+        android:paddingLeft="2dp"
+        android:background="#ffffff"/>
+    <EditText
         android:id="@+id/password"
         android:layout_width="190dp"
         android:layout_height="40dp"

@@ -24,6 +24,7 @@ import android.widget.TextView;
 import com.android.volley.RequestQueue;
 import com.android.volley.toolbox.Volley;
 
+import org.json.JSONException;
 import org.json.JSONObject;
 
 public class LoginActivity extends AppCompatActivity {
@@ -46,7 +47,7 @@ public class LoginActivity extends AppCompatActivity {
                         .setAction("Action", null).show();
             }
         });
-        RequestQueue requestQueue = Volley.newRequestQueue(this);
+        final RequestQueue requestQueue = Volley.newRequestQueue(this);
 
 
 
@@ -64,11 +65,25 @@ public class LoginActivity extends AppCompatActivity {
         mButtonLogin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View View){
+
+                String username = mTextUsername.getText().toString();
+                if (username.matches("[A-Za-z0-9]+")) {
+
+                }
+                String password = mTextPassword.getText().toString();
+                JSONObject loginInfo = new JSONObject();
+                try {
+                    loginInfo.put("username", username);
+                    loginInfo.put("password", password);
+                } catch(JSONException e){
+                    e.printStackTrace();
+                }
+
                 String url = "http://127.0.0.1:8000/api-auth/login/";
                 JsonObjectRequest objectRequest = new JsonObjectRequest(
                         Request.Method.POST,
                         url,
-                        null,
+                        loginInfo,
                         new Response.Listener<JSONObject>() {
                             @Override
                             public void onResponse(JSONObject response) {
@@ -82,7 +97,7 @@ public class LoginActivity extends AppCompatActivity {
                             }
                         }
                 );
-
+                requestQueue.add(objectRequest);
             }
 
         });
