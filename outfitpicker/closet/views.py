@@ -3,7 +3,6 @@ from django.shortcuts import render
 from django.db import models
 from django.contrib.auth.models import User
 from django.http import HttpResponse
-from rest_framework.views import APIView
 from random import randint
 from django.core import serializers
 from closet.models import (
@@ -46,7 +45,7 @@ def remove_clothing_item(request):
 
 @csrf_exempt
 def view_clothes(request):
-    clothesDict = {}
+    clothesDict = []
     user = request.user
     closet = user.closet 
     clothes_set = closet.clothes.all()
@@ -57,7 +56,7 @@ def view_clothes(request):
             "clothing_type": item.clothing_type,
             "colour": item.colour,
             }
-        clothesDict[str(index)] = itemInfo
+        clothesDict.append(itemInfo) 
     # import ipdb; ipdb.set_trace()
     return HttpResponse(json.dumps(clothesDict), content_type="application/json")
 
@@ -66,17 +65,18 @@ def view_clothing_item(request):
     user = request.user
     closet = user.closet
     json_data = json.loads(request.body)
-    id = json_data.id
+    id = json_data['id']
     clothing_item = closet.clothes.get(id=id)
     serialized_obj = serializers.serialize('json', [clothing_item])
     return HttpResponse(serialized_obj, content_type="application/json")
+
 
 @csrf_exempt
 def view_outfit(request):
     user = request.user
     closet = user.closet
     json_data = json.loads(request.body)
-    id = json_data.id
+    id = json_data['id']
     outfit_item = closet.outfits.get(id=id)
     serialized_obj = serializers.serialize('json', [outfit_item])
     return HttpResponse(serialized_obj, content_type="application/json")

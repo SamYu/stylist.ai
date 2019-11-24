@@ -9,5 +9,5 @@ urlpatterns = [
     path('add_outfit', views.add_outfit, name="add_outfit"),
     path('remove_outfit', views.remove_outfit, name="remove_outfit"),
     path('view_outfit', views.view_outfit, name="view_outfit"),
-    path('clothing_item', views.view_clothing_item, name="view_clothing_item"),
+    path('view_clothing_item', views.view_clothing_item, name="view_clothing_item"),
 ]
