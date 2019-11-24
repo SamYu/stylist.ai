@@ -1,6 +1,6 @@
 from django.shortcuts import render
 from django.contrib.auth.models import User
-from django.contrib.auth import authenticate
+from django.contrib.auth import authenticate, login
 from django.http import HttpResponse
 from closet.models import Closet
 from django.views.decorators.csrf import csrf_exempt
@@ -26,7 +26,7 @@ def register(request):
 
 
 @csrf_exempt
-def login(request):
+def loginUser(request):
     # username
     # password
     json_data = json.loads(request.body)
@@ -37,6 +37,7 @@ def login(request):
 
     response = HttpResponse()
     if user is not None:
+        login(request, user)
         response.status_code = 200
         return response
     else:
