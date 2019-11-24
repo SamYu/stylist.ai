@@ -3,6 +3,7 @@ from closet.models import (
     Closet,
     ClothingItem,
     Outfit,
+    ClothingMaterial
 )
 # Register your models here.
 
@@ -19,4 +20,8 @@ class ClosetAdmin(admin.ModelAdmin):
 
 @admin.register(Outfit)
 class OutfitAdmin(admin.ModelAdmin):
+    pass
+
+@admin.register(ClothingMaterial)
+class ClothingMaterialAdmin(admin.ModelAdmin):
     pass
