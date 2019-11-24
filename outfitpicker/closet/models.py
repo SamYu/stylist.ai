@@ -1,4 +1,17 @@
 from django.db import models
+from django.contrib.auth import get_user_model
+from django.conf import settings
+
+class Closet(models.Model):
+    user = models.OneToOneField(
+        settings.AUTH_USER_MODEL,
+        on_delete=models.CASCADE,
+        related_name="closet"
+    )
+    count = models.IntegerField()
+
+    def __str__(self):
+       return self.user.email + '\'s closet'
 
 class ClothingItem(models.Model):
     clothing_type_choices = (
@@ -15,10 +28,32 @@ class ClothingItem(models.Model):
         choices=clothing_type_choices,
         max_length=100,
     )
-
-class Closet(models.Model):
-    clothes = models.ForeignKey(
-        ClothingItem,
+    closet = models.ForeignKey(
+        Closet,
         on_delete=models.CASCADE,
+        related_name="clothes",
+        null=True,
+        blank=True,
     )
-    count = models.IntegerField()
+
+    def __str__(self):
+       return self.name
+
+class Outfit(models.Model):
+    name = models.CharField(max_length=100)
+    clothes = models.ManyToManyField(
+        ClothingItem,
+        related_name="outfits"
+    )
+    closet = models.ForeignKey(
+        Closet,
+        on_delete=models.CASCADE,
+        related_name="outfits",
+        null=True,
+        blank=True,
+    )
+    rating = models.IntegerField()
+
+    def __str__(self):
+       return self.name
+
