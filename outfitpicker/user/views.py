@@ -49,19 +49,14 @@ def loginUser(request):
 
     user = authenticate(username=username, password=password)
 
-    response = HttpResponse()
     if user is not None:
         login(request, user)
-        response.status_code = 200
-        return response
+        return JsonResponse({'status_code': 200})
     else:
-        response.status_code = 401
-        return response
+        return JsonResponse({'status_code': 401})
 
 
 @csrf_exempt
 def logoutUser(request):
     logout(request)
-    response = HttpResponse()
-    response.status_code = 200
-    return response
+    return JsonResponse({'status_code': 200})
