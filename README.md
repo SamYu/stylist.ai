@@ -1,6 +1,15 @@
 # stylist.ai
 
-Hack Western 2019
+https://devpost.com/software/stylist-ai
+
+# Inspiration
+Life is busy. Make your decisions faster with stylist.ai. We built this app to keep you fashionable while staying on the go.
+
+# What it does
+stylist.ai provides you with styling options on the fly using deep neural networks.
+
+# How I built it
+Backend: Django, Python, tensorflow Infrastructure: Google Cloud SQL, Google Compute Engine Frontend: Android, Java
 
 # How to develop locally
 
