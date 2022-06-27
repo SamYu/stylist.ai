@@ -1,6 +1,6 @@
 Django==2.2.10
 djangorestframework==3.10.3
-mysql-connector-python==8.0.11
+mysql-connector-python==8.0.14
 mysqlclient==1.4.6
 protobuf==3.10.0
 PyMySQL==0.9.3
